@@ -1,0 +1,14 @@
+#!/bin/bash
+set -ex
+
+main() {
+  docker run \
+    --interactive \
+    --tty \
+    --env DISPLAY=unix$DISPLAY \
+    --volume /tmp/.X11-unix:/tmp/.X11-unix \
+    paul/arduino \
+    "$@"
+}
+
+main "$@"
