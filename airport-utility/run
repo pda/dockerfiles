@@ -1,0 +1,22 @@
+#!/bin/bash
+set -ex
+
+main() {
+  local vol="airport-utility"
+
+  if ! docker volume inspect $vol &>/dev/null; then
+    docker volume create --name=$vol >/dev/null
+  fi
+
+  docker run \
+    --interactive \
+    --tty \
+    --net host \
+    --env DISPLAY=unix$DISPLAY \
+    --volume /tmp/.X11-unix:/tmp/.X11-unix \
+    --volume "$vol:/wine" \
+    paul/airport-utility \
+    "$@"
+}
+
+main "$@"

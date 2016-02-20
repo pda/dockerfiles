@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+if [[ -f "/wine/drive_c/Program Files/Bonjour/mDNSResponder.exe" ]]; then
+  echo "Starting mDNSResponder for Bonjour"
+  wine "/wine/drive_c/Program Files/Bonjour/mDNSResponder.exe" -server >/dev/null &
+fi
+
+echo "Running $@"
+"$@"
+
+echo "Shutting down wineserver"
+/usr/lib/i386-linux-gnu/wine/bin/wineserver -k
